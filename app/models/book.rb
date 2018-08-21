@@ -4,4 +4,6 @@ class Book < ApplicationRecord
       "%#{search.capitalize}%", "%#{search}%", "%#{search.downcase}%",
        "%#{search.capitalize}%")
   end
+
+  has_many :reviews
 end
