@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+
   def index
     @books = Book.all
     if params[:search]
@@ -24,12 +25,7 @@ class BooksController < ApplicationController
     @reviews = Review.where(book: @book)
 
     @rating = Rating.new(book: @book)
-    ratings = Rating.where(book: @book)
-    @avg_rate = if  ratings.count != 0
-      '%.2f' % ((ratings.sum(:number) + 0.0)/ratings.count)
-    else
-      0
-    end
+    avg_rate(@book)
 
   end
 
@@ -37,5 +33,14 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :author, :description, :search)
+  end
+
+  def avg_rate(book)
+    @avg_rate = if book.ratings.count != 0
+      '%.2f' % book.ratings.average(:number).to_f
+    else
+      0
+    end
+    @avg_rate
   end
 end
