@@ -1,6 +1,11 @@
 class BooksController < ApplicationController
   def index
     @books = Book.all
+    if params[:search]
+      @books = Book.search(params[:search]).order("created_at DESC")
+    else
+      @books = Book.all
+    end
   end
 
   def new
@@ -8,14 +13,18 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.create(book_params)
-
+    @book = Book.new(book_params)
+    @book.save
     redirect_to books_path
+  end
+
+  def show
+    @book = Book.find(params[:id])
   end
 
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :description)
+    params.require(:book).permit(:title, :author, :description, :search)
   end
 end
