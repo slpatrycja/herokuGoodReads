@@ -1,5 +1,7 @@
 <h1>Our books</h1>
+<div style="display:none;">
 <%= link_to 'Add new book', new_book_path %><hr>
+</div>
 
 <%= form_tag books_path, :method => 'get' do %>
   <%= text_field_tag :search, params[:search] %>
