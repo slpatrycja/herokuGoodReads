@@ -1,10 +1,9 @@
 class BooksController < ApplicationController
   def index
-    @books = Book.all
     if params[:search]
       @books = Book.search(params[:search]).order("created_at DESC")
     else
-      @books = Book.all
+      @books = Book.all.order("created_at DESC")
     end
   end
 
@@ -25,6 +24,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :description, :search)
+    params.require(:book).permit(:title, :author, :description)
   end
 end

@@ -1,7 +1,5 @@
 class Book < ApplicationRecord
   def self.search(search)
-    where("title LIKE ?  OR title LIKE ? OR title LIKE ? OR author LIKE ?",
-      "%#{search.capitalize}%", "%#{search}%", "%#{search.downcase}%",
-       "%#{search.capitalize}%")
+    where("title ILIKE :q OR author ILIKE :q", q: "%#{search.downcase}%")
   end
 end
