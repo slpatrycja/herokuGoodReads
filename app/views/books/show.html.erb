@@ -1,53 +1,76 @@
-<%= link_to 'Back to books list', books_path %>
-<p>
-  <h1><%= @book.title %></h1>
-</p>
-<p>
-  <h4><%= @book.author %></h4>
-</p>
-<p>
-  <%= @book.description %>
-</p>
-<hr>
+<html>
+<head>
+  <title>GoodReads</title>
+  <link href="https://fonts.googleapis.com/css?family=ABeeZee|Amatic+SC" rel="stylesheet">
+</head>
+<body>
+  <div class='heading'>
+    <p>Our books</p>
+    <a href='javascript:void(0)' id="openbtn" class="openbtn" onclick="openNav()">☰</a>
+  </div>
+  <div id="mySidenav" class='sidenav'>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">X Close nav</a><hr>
+    <%= link_to 'Homepage', root_path %><hr>
+    <%= link_to 'Back to list', books_path %><hr>
+    <%= link_to 'Sign in' %><hr>
+    <%= link_to 'Nav' %><hr>
+    <%= link_to 'Nav' %><hr>
+    <%= link_to 'Nav' %><hr>
+  </div>
+<div class='container_body' id='content'
+  <p>
+    <h1><%= @book.title %></h1>
+    <h3><%= @book.author %></h3>
+  </p>
+  <div class="book_description">
+  <p>
+    <%= @book.description %>
+  </p>
+  </div>
+  <hr>
 
-<h2>Rate the book</h2>
-<%= form_for @rating do |f| %>
-  <%= f.hidden_field :book_id %>
-  <%= select_tag :number, options_for_select(1..10) %>
-  <%= f.submit 'Rate' %>
-<% end %>
-<hr>
-<h2>Read this book? Leave a review!</h2>
-<%= form_for @review do |f| %>
-  <%= f.hidden_field :book_id %>
-  <p>
-    <%= f.label :nick %>
-    <%= f.text_field :nick %>
-  </p>
-  <p>
-    <%= f.label :body %>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit 'Add review' %>
-  </p>
-<% end %>
-<hr>
+  <div class='rating'>
+  <h2>Rate the book</h2>
+  <div id='rating_form'>
+  <%= form_for @rating do |f|%>
+    <%= f.hidden_field :book_id %>
+    <%= select_tag :number, options_for_select(1..10) %>
+    <%= f.submit 'Rate' %>
+  <% end %>
+  </div>
+  <hr>
+  <h2>Read this book? Leave a review!</h2>
+  <div id='review_form'>
+  <%= form_for @review do |f| %>
+    <%= f.hidden_field :book_id %>
+    <p>
+      <%= f.label :nick %>
+      <%= f.text_field :nick %>
+    </p>
+    <p>
+      <%= f.label :review %>
+      <%= f.text_area :body %>
+    </p>
+    <p>
+      <%= f.submit 'Add review' %>
+    </p>
+  <% end %>
+  </div>
+  </div>
 
-<h2>See what others think!</h2>
-<p>
-  <strong>Overall rating: </strong>
-  <%= @book.avg_rate %>
-</p>
-
-<% @reviews.each do |review| %>
-<div class='review_box' style="border: 2px solid grey; width: 300px; height: auto;
-padding:5px;">
+  <h2>See what others think!</h2>
   <p>
-    <strong><%= review.nick%></strong><i>&nbspsays...</i>
+    <h3>Overall rating: <%= @book.avg_rate %></h3>
   </p>
-  <p>
-    &nbsp&nbsp&nbsp<%= review.body %>
-  </p>
-</div><br>
-<% end %>
+  <% @reviews.each do |review| %>
+    <div class='review_card' >
+      <p>
+        <strong><%= review.nick%></strong><i>&nbspsays...</i>
+      </p>
+      <p>
+        <%= review.body %>
+      </p>
+    </div><br>
+  <% end %>
+  </div>
+</html>

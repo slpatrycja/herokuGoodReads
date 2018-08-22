@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'books/sort_asc', to: 'books#sort_asc'
